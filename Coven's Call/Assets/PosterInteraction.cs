@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +8,8 @@ public class PosterInteraction : MonoBehaviour
     public KeyCode interactionKey = KeyCode.X;
     public KeyCode exitKey = KeyCode.Escape;
     private bool isPlayerNear = false;
+
+    public PosterExitDialog exitDialog; // Adaugă referința aici
 
     void Update()
     {
@@ -23,6 +24,12 @@ public class PosterInteraction : MonoBehaviour
         {
             posterUI.SetActive(false);
             Time.timeScale = 1f; // reia jocul
+
+            // Începem dialogul de după poster
+            if (exitDialog != null)
+            {
+                exitDialog.TriggerSecondDialog();
+            }
         }
     }
 
