@@ -10,13 +10,16 @@ public class ChoiceManager : MonoBehaviour
     public Button rightChoiceButton;
     public Image timerCircle;
 
-    private float timerDuration = 5f; // seconds
+    private float timerDuration = 5f;
     private float timer;
     private bool isTiming = false;
 
     private System.Action onLeftAction;
     private System.Action onRightAction;
     private bool choiceMade = false;
+
+    private string leftReply = "";
+    private string rightReply = "";
 
     void Update()
     {
@@ -30,14 +33,20 @@ public class ChoiceManager : MonoBehaviour
                 isTiming = false;
                 int randomChoice = Random.Range(0, 2);
                 if (randomChoice == 0)
+                {
+                    ShowPlayerReply(leftReply);
                     OnLeftChoice();
+                }
                 else
+                {
+                    ShowPlayerReply(rightReply);
                     OnRightChoice();
+                }
             }
         }
     }
 
-    public void ShowChoices(string question, string leftText, string rightText, System.Action leftAction, System.Action rightAction)
+    public void ShowChoices(string question, string leftText, string rightText, string leftResponse, string rightResponse, System.Action leftAction, System.Action rightAction)
     {
         dialogPanel.SetActive(true);
         questionText.text = question;
@@ -46,6 +55,8 @@ public class ChoiceManager : MonoBehaviour
 
         onLeftAction = leftAction;
         onRightAction = rightAction;
+        leftReply = leftResponse;
+        rightReply = rightResponse;
 
         choiceMade = false;
         StartTimer();
@@ -72,6 +83,8 @@ public class ChoiceManager : MonoBehaviour
         dialogPanel.SetActive(false);
         onLeftAction?.Invoke();
 
+        ShowPlayerReply(leftReply);
+
         if (CursorManager.Instance != null)
         {
             CursorManager.Instance.HideCursor();
@@ -87,9 +100,19 @@ public class ChoiceManager : MonoBehaviour
         dialogPanel.SetActive(false);
         onRightAction?.Invoke();
 
+        ShowPlayerReply(rightReply);
+
         if (CursorManager.Instance != null)
         {
             CursorManager.Instance.HideCursor();
+        }
+    }
+
+    private void ShowPlayerReply(string text)
+    {
+        if (SpeechBubbleManager.Instance != null)
+        {
+            SpeechBubbleManager.Instance.ShowLine(text, SpeechBubbleManager.Speaker.Player, 2f);
         }
     }
 }
