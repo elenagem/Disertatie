@@ -1,35 +1,24 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PosterInteraction : MonoBehaviour
 {
-    public GameObject interactionPrompt;
-    public GameObject posterUI;
+    public GameObject interactionPrompt;   // Text 3D tip "Press X"
     public KeyCode interactionKey = KeyCode.X;
     public KeyCode exitKey = KeyCode.Escape;
     private bool isPlayerNear = false;
-
-    public PosterExitDialog exitDialog; // Adaugă referința aici
 
     void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(interactionKey))
         {
-            posterUI.SetActive(true);
+            // Doar ascundem promptul — camera se ocupa separat de zoom
             interactionPrompt.SetActive(false);
-            Time.timeScale = 0f; // pauzează jocul
         }
 
-        if (posterUI.activeSelf && Input.GetKeyDown(exitKey))
+        if (Input.GetKeyDown(exitKey))
         {
-            posterUI.SetActive(false);
-            Time.timeScale = 1f; // reia jocul
-
-            // Începem dialogul de după poster
-            if (exitDialog != null)
-            {
-                exitDialog.TriggerSecondDialog();
-            }
+            // La revenire, reafisam promptul daca e nevoie
+            interactionPrompt.SetActive(true);
         }
     }
 
