@@ -9,7 +9,7 @@ public class ForestEntrance : MonoBehaviour
     public GameObject promptUI;
     public Transform campingSpawnPoint;
     public Transform npcCampingSpawnPoint;
-    public KeyCode enterKey = KeyCode.X;
+    public KeyCode enterKey = KeyCode.E;
 
     private bool isPlayerInside = false;
 
@@ -43,7 +43,7 @@ public class ForestEntrance : MonoBehaviour
             controller.enabled = true;
 
         // Disable poster interaction
-        var posterScript = FindObjectOfType<PosterCameraZoom>();
+        var posterScript = Object.FindFirstObjectByType<PosterCameraZoom>();
         if (posterScript != null)
             posterScript.enabled = false;
 
