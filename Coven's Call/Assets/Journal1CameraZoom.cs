@@ -17,6 +17,9 @@ public class Journal1CameraZoom : MonoBehaviour
     private Quaternion originalRotation;
     private ManualThirdPersonCamera cameraController;
 
+    public GameObject dollCameraZoom;
+    public GameObject dollInteraction;
+
     void Start()
     {
         originalPosition = cameraTransform.position;
@@ -52,6 +55,11 @@ public class Journal1CameraZoom : MonoBehaviour
 
             if (cameraController != null)
                 cameraController.enabled = true;
+
+            dollCameraZoom.GetComponent<DollCameraZoom>().enabled = true;
+            dollInteraction.GetComponent<DollInteraction>().enabled = true;
+            this.enabled = false;
+
         }
     }
 
