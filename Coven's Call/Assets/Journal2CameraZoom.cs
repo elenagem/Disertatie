@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem.Interactions;
 
-public class DollCameraZoom : MonoBehaviour
+public class Journal2CameraZoom : MonoBehaviour
 {
     public Transform cameraTransform;
     public Transform cameraTarget;
@@ -13,15 +12,10 @@ public class DollCameraZoom : MonoBehaviour
     public float moveDuration = 1.5f;
     public GameObject thirdPersonCamera;
 
-    public DollExitDialog dollExitDialog;
-
     private bool isZoomedIn = false;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private ManualThirdPersonCamera cameraController;
-
-    public GameObject journalCameraZoom;
-    public GameObject journalInteraction;
 
     void Start()
     {
@@ -58,14 +52,6 @@ public class DollCameraZoom : MonoBehaviour
 
             if (cameraController != null)
                 cameraController.enabled = true;
-
-            if (dollExitDialog != null)
-                dollExitDialog.TriggerDollDialog();
-
-            journalCameraZoom.GetComponent<Journal2CameraZoom>().enabled = true;
-            journalInteraction.GetComponent<Journal2Interaction>().enabled = true;
-            this.enabled = false;
-
         }
     }
 
