@@ -7,8 +7,10 @@ public class BootInteraction : MonoBehaviour
     public KeyCode exitKey = KeyCode.Escape;
     private bool isPlayerNear = false;
 
+
     void Update()
     {
+
         if (isPlayerNear && Input.GetKeyDown(interactionKey))
         {
             interactionPrompt.SetActive(false);
@@ -31,10 +33,12 @@ public class BootInteraction : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
             interactionPrompt.SetActive(false);
             isPlayerNear = false;
         }
     }
+
 }

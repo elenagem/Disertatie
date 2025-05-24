@@ -19,6 +19,9 @@ public class BootCameraZoom : MonoBehaviour
     private Quaternion originalRotation;
     private ManualThirdPersonCamera cameraController;
 
+    public GameObject journalCameraZoom;
+    public GameObject journalInteraction;
+
     void Start()
     {
         originalPosition = cameraTransform.position;
@@ -57,6 +60,10 @@ public class BootCameraZoom : MonoBehaviour
 
             if (bootExitDialog != null)
                 bootExitDialog.TriggerBootDialog();
+
+            journalCameraZoom.GetComponent<Journal1CameraZoom>().enabled=true;
+            journalInteraction.GetComponent<Journal1Interaction>().enabled=true;
+            this.enabled = false;
 
         }
     }

@@ -2533,7 +2533,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345717897}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dabfaaba214d982428a42d8003941d48, type: 3}
   m_Name: 
@@ -8669,6 +8669,8 @@ MonoBehaviour:
   moveDuration: 1.5
   thirdPersonCamera: {fileID: 330585543}
   bootExitDialog: {fileID: 1101600321}
+  journalCameraZoom: {fileID: 345717897}
+  journalInteraction: {fileID: 1511705501}
 --- !u!65 &518154718
 BoxCollider:
   m_ObjectHideFlags: 0
