@@ -12,6 +12,8 @@ public class Journal2CameraZoom : MonoBehaviour
     public float moveDuration = 1.5f;
     public GameObject thirdPersonCamera;
 
+    public AudioSource chantAudio;
+
     private bool isZoomedIn = false;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
@@ -52,6 +54,13 @@ public class Journal2CameraZoom : MonoBehaviour
 
             if (cameraController != null)
                 cameraController.enabled = true;
+
+            // PORNESTE SUNETUL DE INCANTATII
+            if (chantAudio != null && !chantAudio.isPlaying)
+                chantAudio.Play();
+
+            Invoke(nameof(ShowCanYouHearThat), 3f);
+
         }
     }
 
@@ -73,4 +82,13 @@ public class Journal2CameraZoom : MonoBehaviour
         cameraTransform.position = targetPos;
         cameraTransform.rotation = targetRot;
     }
+    void ShowCanYouHearThat()
+    {
+        SpeechBubbleManager.Instance.ShowLine(
+            "Can you hear that??",
+            SpeechBubbleManager.Speaker.Player,
+            3f
+        );
+    }
+
 }
