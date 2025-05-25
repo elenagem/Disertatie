@@ -10280,8 +10280,8 @@ MonoBehaviour:
   player: {fileID: 1746363106}
   thirdPersonCamera: {fileID: 330585543}
   cameraTransform: {fileID: 330585546}
-  zoomTarget: {fileID: 901460355}
   moveDuration: 1.5
+  branchPrefab: {fileID: 919132149155446097, guid: 980d6dce8d8fa5c4490a4da2ac0f2415, type: 3}
 --- !u!4 &625833402
 Transform:
   m_ObjectHideFlags: 0

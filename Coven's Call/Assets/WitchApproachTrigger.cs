@@ -39,5 +39,13 @@ public class WitchApproachTrigger : MonoBehaviour
             SpeechBubbleManager.Speaker.Player,
             3f
         );
+
+        // Dupa replica jucatorului - trosnet creanga + zoom
+        Invoke(nameof(TriggerCrack), 3f);
+    }
+
+    void TriggerCrack()
+    {
+        Object.FindFirstObjectByType<BranchCrackTrigger>()?.TriggerBranchSequence();
     }
 }

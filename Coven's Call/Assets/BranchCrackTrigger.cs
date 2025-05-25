@@ -7,8 +7,10 @@ public class BranchCrackTrigger : MonoBehaviour
     public GameObject player;
     public GameObject thirdPersonCamera;
     public Transform cameraTransform;
-    public Transform zoomTarget;
     public float moveDuration = 1.5f;
+
+    // (Optional) daca vrei sa apara o creanga vizuala
+    public GameObject branchPrefab;
 
     private ManualThirdPersonCamera cameraController;
     private Vector3 originalPosition;
@@ -32,7 +34,8 @@ public class BranchCrackTrigger : MonoBehaviour
         if (triggered) return;
         triggered = true;
 
-        Invoke(nameof(PlayCrackAndZoom), 0.1f); // delay dupa replica playerului
+        // Dupa 1 sec de la replica
+        Invoke(nameof(PlayCrackAndZoom), 0.1f);
     }
 
     void PlayCrackAndZoom()
@@ -47,7 +50,21 @@ public class BranchCrackTrigger : MonoBehaviour
         if (controller != null)
             controller.enabled = false;
 
-        StartCoroutine(MoveCamera(zoomTarget.position, zoomTarget.rotation));
+        // Calculeaza pozitia jos la picioarele jucatorului
+        Vector3 playerFeet = player.transform.position + player.transform.forward * 0.4f + Vector3.down * 0.9f;
+        Quaternion camRotation = Quaternion.Euler(90f, player.transform.eulerAngles.y, 0f);
+
+        // Creeaza target pentru camera
+        GameObject cameraPoint = new GameObject("DynamicZoomTarget");
+        cameraPoint.transform.position = playerFeet + new Vector3(0f, 0.5f, 0f); // putin deasupra solului
+        cameraPoint.transform.rotation = camRotation;
+
+        // Instantiaza crenguta (optional)
+        if (branchPrefab != null)
+            Instantiate(branchPrefab, playerFeet, Quaternion.identity);
+
+        // Zoom
+        StartCoroutine(MoveCamera(cameraPoint.transform.position, cameraPoint.transform.rotation));
     }
 
     IEnumerator MoveCamera(Vector3 targetPos, Quaternion targetRot)
