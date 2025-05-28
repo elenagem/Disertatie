@@ -7,6 +7,7 @@ public class WitchBehavior : MonoBehaviour
 {
     public List<GameObject> witches;
     public GameObject player;
+    public GameObject npc;
     public AudioSource screamAudio;
 
     public void TriggerWitchTurn()
@@ -42,5 +43,20 @@ public class WitchBehavior : MonoBehaviour
                 anim.SetBool("isRunning", true);
             }
         }
+
+        // NPC spune "Run!" dupa 1 secunda
+        Invoke(nameof(ShowRunLine), 1f);
+
+        // Porneste secventa de relocare a scenei (dupa 3-4 secunde)
+        Object.FindFirstObjectByType<SceneRelocator>()?.StartRelocationSequence();
+    }
+
+    void ShowRunLine()
+    {
+        SpeechBubbleManager.Instance.ShowLine(
+            "Run!",
+            SpeechBubbleManager.Speaker.NPC,
+            2f
+        );
     }
 }
