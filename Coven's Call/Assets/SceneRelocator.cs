@@ -9,7 +9,7 @@ public class SceneRelocator : MonoBehaviour
     public Transform playerSpawnPoint;
     public Transform npcSpawnPoint;
 
-    public float delayBeforeTeleport = 4f;
+    public float delayBeforeTeleport = 5f;
 
     public void StartRelocationSequence()
     {
@@ -18,7 +18,7 @@ public class SceneRelocator : MonoBehaviour
 
     void RelocateScene()
     {
-        // Dezactivare control player
+        // Dezactiveaza controlul jucatorului
         var playerController = player.GetComponent<SimplePlayerController>();
         if (playerController != null)
             playerController.enabled = false;
@@ -27,12 +27,12 @@ public class SceneRelocator : MonoBehaviour
         if (cameraController != null)
             cameraController.enabled = false;
 
-        // Dezactivare follow NPC
+        // Dezactiveaza urmarea NPC-ului
         var npcFollower = npc.GetComponent<NPCFollower>();
         if (npcFollower != null)
             npcFollower.enabled = false;
 
-        // Oprire NavMeshAgent NPC
+        // Opreste navmesh-ul de pe NPC
         var npcAgent = npc.GetComponent<NavMeshAgent>();
         if (npcAgent != null)
         {
@@ -40,14 +40,14 @@ public class SceneRelocator : MonoBehaviour
             npcAgent.ResetPath();
         }
 
-        // Teleportare player
+        // Teleporteaza playerul
         if (player != null && playerSpawnPoint != null)
         {
             player.position = playerSpawnPoint.position;
             player.rotation = playerSpawnPoint.rotation;
         }
 
-        // Teleportare NPC
+        // Teleporteaza NPC-ul
         if (npc != null && npcSpawnPoint != null)
         {
             npc.position = npcSpawnPoint.position;
@@ -66,17 +66,17 @@ public class SceneRelocator : MonoBehaviour
         if (npcLookDir != Vector3.zero)
             npc.rotation = Quaternion.LookRotation(npcLookDir);
 
-        // Seteaza animatia playerului pe idle
+        // Pune animatia playerului pe idle
         var playerAnim = player.GetComponent<Animator>();
         if (playerAnim != null)
             playerAnim.SetFloat("Speed", 0f);
 
-        // Opreste sunetul de scream
+        // Opreste sunetul de scream daca e inca activ
         var witchAudio = Object.FindFirstObjectByType<WitchBehavior>()?.screamAudio;
         if (witchAudio != null && witchAudio.isPlaying)
             witchAudio.Stop();
 
-        // Pozitioneaza vrajitoarele in cerc si le opreste
+        // Opreste vrajitoarele si le pozitioneaza in cerc
         var witchManager = Object.FindFirstObjectByType<WitchCirclePositioner>();
         if (witchManager != null && witchManager.witches != null)
         {
@@ -91,11 +91,10 @@ public class SceneRelocator : MonoBehaviour
                 if (anim != null) anim.SetBool("isRunning", false);
             }
 
-            // Pozitioneaza vrajitoarele si le face sa se uite la player
             witchManager.PositionWitchesInCircle(player);
         }
 
-        // Afiseaza replica dupa o secunda
+        // Afiseaza replica "Help me!" dupa 1 secunda
         Invoke(nameof(ShowHelpMeLine), 1f);
     }
 
@@ -106,5 +105,16 @@ public class SceneRelocator : MonoBehaviour
             SpeechBubbleManager.Speaker.NPC,
             3f
         );
+
+        // Apeleaza alegerea dupa ce dispare balonul
+        Invoke(nameof(TriggerHelpChoice), 2f);
     }
+
+    void TriggerHelpChoice()
+    {
+        var helpTrigger = Object.FindFirstObjectByType<HelpChoiceTrigger>();
+        if (helpTrigger != null)
+            helpTrigger.BeginChoice();
+    }
+
 }
