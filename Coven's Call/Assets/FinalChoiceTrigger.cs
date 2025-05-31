@@ -4,8 +4,7 @@ public class FinalChoiceTrigger : MonoBehaviour
 {
     public GameObject player;
     public GameObject npc;
-
-    public Transform joinWitchesPosition;
+    public Transform runAwayTarget;
     public float delayBeforeFinalChoice = 1.5f;
 
     public void StartFinalChoice()
@@ -33,18 +32,29 @@ public class FinalChoiceTrigger : MonoBehaviour
 
     void OnJoinWitches()
     {
-        AutoMovePlayer mover = player.GetComponent<AutoMovePlayer>();
-        if (mover != null)
+        // NPC-ul fuge spre runAwayTarget
+        if (npc != null && runAwayTarget != null)
         {
-            mover.MoveTo(joinWitchesPosition.position, () =>
+            AutoMovePlayer npcMover = npc.GetComponent<AutoMovePlayer>();
+            if (npcMover != null)
             {
-                // Ethan fuge
-                if (npc != null)
-                    npc.SetActive(false); // sau animatie de fuga
-
-                FindFirstObjectByType<EndingManager>()?.TriggerEnding("JoinWitches");
-            });
+                npcMover.MoveTo(runAwayTarget.position, () =>
+                {
+                    // Delay scurt ca sa vedem balonul de text
+                    Invoke(nameof(TriggerJoinWitchesEnding), 2f);
+                });
+            }
+            else
+            {
+                npc.SetActive(false);
+                Invoke(nameof(TriggerJoinWitchesEnding), 2f);
+            }
         }
+    }
+
+    void TriggerJoinWitchesEnding()
+    {
+        FindFirstObjectByType<EndingManager>()?.TriggerEnding("JoinWitches");
     }
 
     void OnRefuse()

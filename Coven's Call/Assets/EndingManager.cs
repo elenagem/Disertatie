@@ -33,10 +33,10 @@ public class EndingManager : MonoBehaviour
                 message = "You left Ethan behind. No one ever saw him again.";
                 break;
             case "JoinWitches":
-                message = "You joined the witches. Ethan was spared... for now.";
+                message = "You joined the witches. Ethan was spared. He came back looking for you but you were never seen again.";
                 break;
             case "Refuse":
-                message = "You refused their offer. You shared Ethan's fate.";
+                message = "You refused their offer. You shared Ethan's fate. No one ever saw either of you again.";
                 break;
             default:
                 message = "An unknown ending occurred.";
