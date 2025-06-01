@@ -19,6 +19,9 @@ public class PosterCameraZoom : MonoBehaviour
     private Quaternion originalRotation;
     private ManualThirdPersonCamera cameraController;
 
+    public GameObject bootCameraZoom;
+    public GameObject bootInteraction;
+
     void Start()
     {
         originalPosition = cameraTransform.position;
@@ -59,6 +62,10 @@ public class PosterCameraZoom : MonoBehaviour
             //  ADAUGARE: porneste dialogul dupa iesirea din poster
             if (posterExitDialog != null)
                 posterExitDialog.TriggerSecondDialog();
+
+            bootCameraZoom.GetComponent<BootCameraZoom>().enabled = true;
+            bootInteraction.GetComponent<BootInteraction>().enabled = true;
+            this.enabled = false;
         }
     }
 

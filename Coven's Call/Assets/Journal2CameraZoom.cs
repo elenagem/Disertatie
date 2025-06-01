@@ -14,6 +14,10 @@ public class Journal2CameraZoom : MonoBehaviour
 
     public AudioSource chantAudio;
 
+    public AudioSource windSound;
+    public AudioSource woodCreekSound;
+    public AudioSource crowSound;
+
     private bool isZoomedIn = false;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
@@ -55,12 +59,24 @@ public class Journal2CameraZoom : MonoBehaviour
             if (cameraController != null)
                 cameraController.enabled = true;
 
-            // PORNESTE SUNETUL DE INCANTATII
+            // Porneste sunetul de incantatii
             if (chantAudio != null && !chantAudio.isPlaying)
                 chantAudio.Play();
 
-            Invoke(nameof(ShowCanYouHearThat), 3f);
+            // Opreste sunetele de padure
+            if (windSound != null && windSound.isPlaying)
+                windSound.Stop();
 
+            if (woodCreekSound != null && woodCreekSound.isPlaying)
+                woodCreekSound.Stop();
+
+            if (crowSound != null && crowSound.isPlaying)
+                crowSound.Stop();
+
+            // Daca se repeta crowSound prin InvokeRepeating, poti adauga:
+            CancelInvoke("PlayCrowSound");
+
+            Invoke(nameof(ShowCanYouHearThat), 3f);
         }
     }
 
@@ -82,6 +98,7 @@ public class Journal2CameraZoom : MonoBehaviour
         cameraTransform.position = targetPos;
         cameraTransform.rotation = targetRot;
     }
+
     void ShowCanYouHearThat()
     {
         SpeechBubbleManager.Instance.ShowLine(
@@ -90,5 +107,4 @@ public class Journal2CameraZoom : MonoBehaviour
             3f
         );
     }
-
 }

@@ -11,6 +11,8 @@ public class SceneRelocator : MonoBehaviour
 
     public float delayBeforeTeleport = 5f;
 
+    public AudioSource creepyAmbientSound;
+
     public void StartRelocationSequence()
     {
         Invoke(nameof(RelocateScene), delayBeforeTeleport);
@@ -94,6 +96,10 @@ public class SceneRelocator : MonoBehaviour
             witchManager.PositionWitchesInCircle(player);
         }
 
+        // Porneste sunetul ambiental creepy
+        if (creepyAmbientSound != null && !creepyAmbientSound.isPlaying)
+            creepyAmbientSound.Play();
+
         // Afiseaza replica "Help me!" dupa 1 secunda
         Invoke(nameof(ShowHelpMeLine), 1f);
     }
@@ -116,5 +122,4 @@ public class SceneRelocator : MonoBehaviour
         if (helpTrigger != null)
             helpTrigger.BeginChoice();
     }
-
 }

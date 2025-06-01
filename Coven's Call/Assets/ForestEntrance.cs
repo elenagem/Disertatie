@@ -9,6 +9,7 @@ public class ForestEntrance : MonoBehaviour
     public GameObject promptUI;
     public Transform campingSpawnPoint;
     public Transform npcCampingSpawnPoint;
+    public GameObject birdSound;
     public KeyCode enterKey = KeyCode.E;
 
     private bool isPlayerInside = false;
@@ -46,6 +47,10 @@ public class ForestEntrance : MonoBehaviour
         var posterScript = Object.FindFirstObjectByType<PosterCameraZoom>();
         if (posterScript != null)
             posterScript.enabled = false;
+
+        // Disable bird sound
+        if (birdSound != null)
+            birdSound.SetActive(false);
 
         if (promptUI != null)
             promptUI.SetActive(false);
